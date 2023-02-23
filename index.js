@@ -1,68 +1,80 @@
 const fs = require("fs");
-const path = require('path');
+const path = require("path");
 const inquirer = require("inquirer");
+const util = require("util");
 const generateMarkdown = require("./utils/generateMarkdown");
+
+const writeFileAsync = util.promisify(fs.writeFile);
 
 // array of questions for user
 const questions = [
-    {
-        // The title of my project
-        type: "input",
-        name: "title",
-        message: "What is your project title?",
-      },
-      {
-        // Description
-        type: "input",
-        name: "description",
-        message: "Please add a decription for your project:",
-      },
-      {
-        // License
-        type: "checkbox",
-        name: "license",
-        message: [],
-      },
-      {
-        type: "input",
-        name: "",
-        message: "",
-      },
-      {
-        type: "input",
-        name: "github",
-        message: "What is your GitHub URL?",
-      },
-    ];
-
+  {
+    type: "input",
+    message: "What is the title of your project?",
+    name: "title",
+  },
+  {
+    type: "input",
+    message: "Please provide a description of your project:",
+    name: "description",
+  },
+  {
+    type: "input",
+    message: "Please provide installation instructions for your project:",
+    name: "installation",
+  },
+  {
+    type: "input",
+    message: "Please provide usage information for your project:",
+    name: "usage",
+  },
+  {
+    type: "input",
+    message: "Please provide contribution guidelines for your project:",
+    name: "contributing",
+  },
+  {
+    type: "input",
+    message: "Please provide test instructions for your project:",
+    name: "tests",
+  },
+  {
+    type: "list",
+    message: "Please choose a license for your project:",
+    name: "license",
+    // found at https://choosealicense.com/community/
+    choices: ["MIT", "Apache", "GNU GPLv2", "GNU GPLv3", "ISC", "None"],
+  },
+  {
+    type: "input",
+    message: "What is your GitHub username?",
+    name: "username",
+  },
+  {
+    type: "input",
+    message: "What is your email address?",
+    name: "email",
+  },
 ];
 
 // function to write README file
 function writeToFile(fileName, data) {
+  return writeFileAsync(fileName, data);
 }
 
 // function to initialize program
-function init() {
-
+async function init() {
+  try {
+    const answers = await inquirer.prompt(questions);
+    const markdown = generateMarkdown(answers);
+    const filename = "README.md";
+    const filepath = path.join(process.cwd(), filename);
+    await writeToFile(filepath, markdown);
+    console.log(`Successfully wrote ${filename} to ${filepath}`);
+  } catch (err) {
+    console.error(err);
+  }
 }
 
 // function call to initialize program
 init();
-
-
-
-
-// Table of Contents
-// Installation
-// Usage
-
-// Contributing
-// Tests
-// Questions
-
-// When a user enters the project title then it is displayed as the title of the README
-// When a user enters a description, installation instructions, usage information, contribution guidelines, and test instructions then this information is added to the sections of the README entitled Description, Installation, Usage, Contributing, and Tests
-// When a user chooses a license for their application from a list of options then a badge for that license is added near the top of the README and a notice is added to the section of the README entitled License that explains which license the application is covered under
-// When a user enters their GitHub username then this is added to the section of the README entitled Questions, with a link to their GitHub profile
-// When a user enters their email address then this is added to the section of the README entitled Questions, with instructions on how to reach them with additional questions
-// When a user clicks on the links in the Table of Contents then they are taken to the corresponding section of the README
