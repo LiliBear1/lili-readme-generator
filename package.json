@@ -1,0 +1,23 @@
+{
+  "name": "static-site",
+  "version": "1.0.0",
+  "description": "A README generator so that I can quickly create a professional README for a new project",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "inquirer": "^8.2.5"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LiliBear1/readme-generator.git"
+  },
+  "keywords": [],
+  "bugs": {
+    "url": "https://github.com/LiliBear1/readme-generator/issues"
+  },
+  "homepage": "https://github.com/LiliBear1/readme-generator#readme"
+}
