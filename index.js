@@ -4,6 +4,14 @@ const inquirer = require("inquirer");
 const util = require("util");
 const generateMarkdown = require("./utils/generateMarkdown");
 
+// Creating writeFileAsync function using promisify method 
+
+// fs.writeFile method asynchronously writes data to a file. However, callback function is called once the write operation is complete
+
+// promisify method converts callback-based APIs to promise-based APIs
+
+// So, util.promisify(fs.writeFile) converts fs.writeFile to promise-based API. Allows use of writeFileAsync function with async/await syntax instead of callbacks
+
 const writeFileAsync = util.promisify(fs.writeFile);
 
 // array of questions for user
@@ -63,13 +71,20 @@ function writeToFile(fileName, data) {
 }
 
 // function to initialize program
+// async function named init defined 
 async function init() {
   try {
+    // inquirer.prompt() method to ask questionsand wait for responses. 
+    // Answers stored in object
     const answers = await inquirer.prompt(questions);
+    // Then calls generateMarkdown(), passing answers object as argument, to generate Markdown string based on responses.
     const markdown = generateMarkdown(answers);
+    // Defines filename and filepath to save generated markdown to README
     const filename = "README.md";
     const filepath = path.join(process.cwd(), filename);
+    // Use writeToFile() to write markdown to file
     await writeToFile(filepath, markdown);
+    // function logs success message to console indicating file has been successfully written. If error occurs, function catches error and logs it to console
     console.log(`Successfully wrote ${filename} to ${filepath}`);
   } catch (err) {
     console.error(err);
