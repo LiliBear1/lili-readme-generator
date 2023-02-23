@@ -23,6 +23,8 @@ This is a walkthrough video demonstrating the functionality of the application:
 
 ![ReadMe Generator video](/images/ReadMe_sample_vid.mov)
 
+* [ReadMe video (if embeded vid doesn't play)](https://watch.screencastify.com/v/ylpfw0Cf5Y1wipX2H5eG) 
+
 * [Git Page Link](https://github.com/LiliBear1/Lili-Weather-Dashboard) 
 
 
